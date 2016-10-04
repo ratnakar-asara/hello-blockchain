@@ -1,0 +1,39 @@
+{
+  "chainName" : "myChain",
+  "KeyValStore" :"keyValStore",
+  "deployWaitTime": "40",
+  "ca": {
+    "ca_url":"grpc://localhost:7054"
+  },
+  "peers":[
+    {
+      "name":"vp0",
+      "peer_url":"grpc://localhost:7051"
+    }
+  ],
+  "users": [
+    {
+      "username":"admin",
+      "secret":"Xurw3yU9zI0l",
+      "affiliation": "bank_a"
+    },
+    {
+      "username":"JohnDoe",
+      "secret":"",
+      "affiliation": "bank_a"
+    }
+  ],
+  "deployRequest":{
+    "chaincodePath":"chaincode",
+    "functionName":"init",
+    "args":["a","100","b","200"]
+  },
+  "invokeRequest":{
+    "functionName":"invoke",
+    "args":["a","b","10"]
+  },
+  "queryRequest":{
+    "functionName":"query",
+    "args":["a"]
+  }
+}
