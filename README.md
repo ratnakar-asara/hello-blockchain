@@ -13,10 +13,10 @@ peer node start
 git clone https://github.com/ratnakar-asara/hello-blockchain.git
 ```
 
-## install hfc@0.6.2
+## install hfc@0.6.5
  install node-sdk where your client program is available 
  
-`npm install hfc@0.6.2`
+`npm install hfc@0.6.5`
 
 ## run the node program
 
