@@ -2,9 +2,9 @@
   "name": "Hello-Blockchain",
   "version": "0.0.1",
   "description": "A Node.js hello-world program using NodeSdk Apis",
-  "main": "app.js",
+  "main": "hello-blockchain.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node hello-blockchain.js"
   },
   "engines": {
     "node": "*"

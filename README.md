@@ -5,8 +5,7 @@ This simple app sets up a target for the ca server and enrolls the admin user. o
 ## Two approches to setup blockchain network:
 
 ### Using docker-compose
-Refer below link to setup a 4 peer network with a ca service
-https://github.com/IBM-Blockchain/fabric-images
+Follow instructions [here](https://github.com/IBM-Blockchain/fabric-images) to setup a 4 peer network with a ca server
 
 ### Or Vagrant environment
 alternatively you can start peer and memberservice natively from Vagrant environment
@@ -35,15 +34,15 @@ cd <path-where-this-repo-is-cloned>/hello-blockchain
 
 ### run the node program
 
-`node app.js`
+`node hello-blockchain.js`
 
 ### To enable debug logs use the below command
 
-`DEBUG=hfc node app.js`
+`DEBUG=hfc node hello-blockchain.js`
 
 ###Output would be something like below:
 ```
-$ node app.js
+$ node hello-blockchain.js
 
 Enrolled admin successfully
 
@@ -65,7 +64,7 @@ Successfully queried  chaincode function: request={"chaincodeID":"1cbab9fc2bbf45
 Once deploy is sucecssful , the code ignores the deploy and performs transactions on blockchain
 
 ```
-$ node app.js
+$ node hello-blockchain.js
 
 completed chaincode invoke transaction: request={"chaincodeID":"1cbab9fc2bbf457a114342f3219baee69bf3465419756b9e2b7d51eaf0bc9729","fcn":"invoke","args":["a","b","10"]}, response={"result":"Tx 774eecd4-24a9-49f3-a65d-203b6f231e68 complete"}
 
