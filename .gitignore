@@ -1,0 +1,6 @@
+keyValStore*
+
+# NPM Dependencies
+node_modules
+
+chaincodeID

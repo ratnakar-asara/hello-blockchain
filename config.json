@@ -1,14 +1,36 @@
 {
   "chainName" : "myChain",
   "KeyValStore" :"keyValStore",
-  "deployWaitTime": "40",
-  "ca": {
+  "deployWaitTime": "60",
+  "caserver": {
     "ca_url":"grpc://localhost:7054"
   },
   "peers":[
     {
-      "name":"vp0",
       "peer_url":"grpc://localhost:7051"
+    },
+    {
+      "peer_url":"grpc://localhost:8051"
+    },
+    {
+      "peer_url":"grpc://localhost:9051"
+    },
+    {
+      "peer_url":"grpc://localhost:10051"
+    }
+  ],
+  "events":[
+    {
+      "event_url":"grpc://localhost:7053"
+    },
+    {
+      "event_url":"grpc://localhost:8053"
+    },
+    {
+      "event_url":"grpc://localhost:9053"
+    },
+    {
+      "event_url":"grpc://localhost:10053"
     }
   ],
   "users": [

@@ -30,6 +30,8 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
+var EVENT_COUNTER = "event_counter"
+
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
 }
@@ -67,6 +69,10 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 		return nil, err
 	}
 
+        err = stub.PutState(EVENT_COUNTER, []byte("1"))
+	if err != nil {
+		return nil, err
+	}
 	return nil, nil
 }
 
@@ -128,6 +134,25 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	if err != nil {
 		return nil, err
 	}
+
+	//Event based
+        evtCounter, err := stub.GetState(EVENT_COUNTER)
+	if err != nil {
+		return nil, errors.New("Failed to get state")
+	}
+	noevts, _ := strconv.Atoi(string(evtCounter))
+
+	tosend := "Event Counter is " + string(evtCounter)
+
+	err = stub.PutState(EVENT_COUNTER, []byte(strconv.Itoa(noevts+1)))
+	if err != nil {
+		return nil, err
+	}
+
+	err = stub.SetEvent("evtsender", []byte(tosend))
+	if err != nil {
+		return nil, err
+        }
 
 	return nil, nil
 }
