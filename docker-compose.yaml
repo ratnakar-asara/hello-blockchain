@@ -1,0 +1,87 @@
+version: '2'
+services:
+  baseimage:
+    build: ./docker-compose
+    image: hyperledger/fabric-baseimage:latest
+
+  membersrvc:
+    image: ibmblockchain/fabric-membersrvc:x86_64-0.6.1-preview
+    container_name: membersrvc
+    extends:
+      file: ./docker-compose/membersrvc.yaml
+      service: membersrvc
+
+  vp0:
+    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    container_name: vp0
+    extends:
+      file: ./docker-compose/peer-secure-pbft-base.yaml
+      service: peer-secure-pbft-base
+    ports:
+      - "7050:7050"
+      - "7051:7051"
+      - "7053:7053"
+    environment:
+      - CORE_PEER_ID=vp0
+      - CORE_SECURITY_ENROLLID=test_vp0
+      - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupbT
+    links:
+      - membersrvc
+
+  vp1:
+    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    container_name: vp1
+    extends:
+      file: ./docker-compose/peer-secure-pbft-base.yaml
+      service: peer-secure-pbft-base
+    ports:
+      - "8050:7050"
+      - "8051:7051"
+      - "8053:7053"
+    environment:
+      - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+      - CORE_PEER_ID=vp1
+      - CORE_SECURITY_ENROLLID=test_vp1
+      - CORE_SECURITY_ENROLLSECRET=5wgHK9qqYaPy
+    links:
+      - membersrvc
+      - vp0
+
+  vp2:
+    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    container_name: vp2
+    extends:
+      file: ./docker-compose/peer-secure-pbft-base.yaml
+      service: peer-secure-pbft-base
+    ports:
+      - "9050:7050"
+      - "9051:7051"
+      - "9053:7053"
+    environment:
+      - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+      - CORE_PEER_ID=vp2
+      - CORE_SECURITY_ENROLLID=test_vp2
+      - CORE_SECURITY_ENROLLSECRET=vQelbRvja7cJ
+    links:
+      - membersrvc
+      - vp0
+
+  vp3:
+    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    container_name: vp3
+    extends:
+      file: ./docker-compose/peer-secure-pbft-base.yaml
+      service: peer-secure-pbft-base
+    ports:
+      - "10050:7050"
+      - "10051:7051"
+      - "10053:7053"
+    environment:
+      - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+      - CORE_PEER_ID=vp3
+      - CORE_SECURITY_ENROLLID=test_vp3
+      - CORE_SECURITY_ENROLLSECRET=9LKqKH5peurL
+    links:
+      - membersrvc
+      - vp0
+
