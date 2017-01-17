@@ -29,7 +29,7 @@ cd hello-blockchain
 
 ####Step2: Start the Network and run the node app with a shell script
 ```
-./setup.sh start 
+./setup.sh up 
 ```
 This will create a network based on the docker-compose.yaml file configuration and also install hfc node module and start the node program
 
@@ -83,7 +83,7 @@ DEBUG=hfc node hello-blockchain.js
 At anytime you can stop the app and clear the network by issuing the below command
 
 ```
-./setup.sh stop
+./setup.sh down
 ```
 
 #####NOTE: 
