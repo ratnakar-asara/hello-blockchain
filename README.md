@@ -17,6 +17,8 @@ here the network configuration is a four node and Certificate Authority network.
 * **NodeJs**: 
 Install [NodeJs](https://nodejs.org/en/download/)
 
+**_NOTE_**: NodeJs **v6.7.0** is recommended.
+
 ##Steps to run the sample node program on Linux machine
 ####Step1: Clone the repo
 ```
