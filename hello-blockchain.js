@@ -37,12 +37,12 @@ function init() {
 
     for (var i = 0; i < config.peers.length; i++) {
         chain.addPeer(config.peers[i].peer_url);
-        chain.eventHubConnect(config.events[i].event_url);
+        //chain.eventHubConnect(config.events[i].event_url);
     }
 
     // Make sure disconnect the eventhub on exit
     process.on('exit', function() {
-        chain.eventHubDisconnect();
+        //chain.eventHubDisconnect();
     });
     newUserName = config.users[1].username;
 
@@ -125,7 +125,7 @@ function invoke() {
 
     var args = getArgs(config.invokeRequest);
 
-    var eh = chain.getEventHub();
+    //var eh = chain.getEventHub();
 
     // Construct the invoke request
     var invokeRequest = {
@@ -152,10 +152,10 @@ function invoke() {
     });
 
     //Listen to custom events
-    var regid = eh.registerChaincodeEvent(chaincodeID, "evtsender", function(event) {
+    /*var regid = eh.registerChaincodeEvent(chaincodeID, "evtsender", function(event) {
         console.log(util.format("Custom event received, payload: %j\n", event.payload.toString()));
         eh.unregisterChaincodeEvent(regid);
-    });
+    });*/
 }
 
 function query() {

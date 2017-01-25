@@ -31,6 +31,7 @@ if [ "${UP_DOWN}" == "up" ]; then
 	#	npm install
 	#fi
 	npm install
+        sleep 10
   	echo 
 	echo "Start the application"
 	##start node application

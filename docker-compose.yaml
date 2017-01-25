@@ -1,22 +1,33 @@
 version: '2'
 services:
   baseimage:
-    build: ./docker-compose
+    build: ./
     image: hyperledger/fabric-baseimage:latest
 
   membersrvc:
-    image: ibmblockchain/fabric-membersrvc:x86_64-0.6.1-preview
+    image: hyperledger/fabric-membersrvc:x86_64-0.6.1-preview
     container_name: membersrvc
-    extends:
-      file: ./docker-compose/membersrvc.yaml
-      service: membersrvc
+    ports:
+    - "7054:7054"
+    command: membersrvc
+    environment:
+      - MEMBERSRVC_CA_LOGGING_SERVER=INFO
+      - MEMBERSRVC_CA_LOGGING_CA=INFO
+      - MEMBERSRVC_CA_LOGGING_ECA=INFO
+      - MEMBERSRVC_CA_LOGGING_ECAP=INFO
+      - MEMBERSRVC_CA_LOGGING_ECAA=INFO
+      - MEMBERSRVC_CA_LOGGING_ACA=INFO
+      - MEMBERSRVC_CA_LOGGING_ACAP=INFO
+      - MEMBERSRVC_CA_LOGGING_TCA=INFO
+      - MEMBERSRVC_CA_LOGGING_TCAP=INFO
+      - MEMBERSRVC_CA_LOGGING_TCAA=INFO
+      - MEMBERSRVC_CA_LOGGING_TLSCA=INFO
 
   vp0:
-    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    image: hyperledger/fabric-peer:x86_64-0.6.1-preview
     container_name: vp0
-    extends:
-      file: ./docker-compose/peer-secure-pbft-base.yaml
-      service: peer-secure-pbft-base
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "7050:7050"
       - "7051:7051"
@@ -25,15 +36,27 @@ services:
       - CORE_PEER_ID=vp0
       - CORE_SECURITY_ENROLLID=test_vp0
       - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupbT
+      - CORE_PEER_DISCOVERY_PERIOD=60s
+      - CORE_PEER_DISCOVERY_TOUCHPERIOD=61s
+      - CORE_PEER_ADDRESSAUTODETECT=true
+      - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
+      - CORE_SECURITY_ENABLED=true
+      - CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN=pbft
+      - CORE_PBFT_GENERAL_MODE=batch
+      - CORE_PBFT_GENERAL_N=4
+    command: sh -c "sleep 10; peer node start"
     links:
       - membersrvc
 
   vp1:
-    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    image: hyperledger/fabric-peer:x86_64-0.6.1-preview
     container_name: vp1
-    extends:
-      file: ./docker-compose/peer-secure-pbft-base.yaml
-      service: peer-secure-pbft-base
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8050:7050"
       - "8051:7051"
@@ -43,16 +66,28 @@ services:
       - CORE_PEER_ID=vp1
       - CORE_SECURITY_ENROLLID=test_vp1
       - CORE_SECURITY_ENROLLSECRET=5wgHK9qqYaPy
+      - CORE_PEER_DISCOVERY_PERIOD=60s
+      - CORE_PEER_DISCOVERY_TOUCHPERIOD=61s
+      - CORE_PEER_ADDRESSAUTODETECT=true
+      - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
+      - CORE_SECURITY_ENABLED=true
+      - CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN=pbft
+      - CORE_PBFT_GENERAL_MODE=batch
+      - CORE_PBFT_GENERAL_N=4
+    command: sh -c "sleep 10; peer node start"
     links:
       - membersrvc
       - vp0
 
   vp2:
-    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    image: hyperledger/fabric-peer:x86_64-0.6.1-preview
     container_name: vp2
-    extends:
-      file: ./docker-compose/peer-secure-pbft-base.yaml
-      service: peer-secure-pbft-base
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "9050:7050"
       - "9051:7051"
@@ -62,16 +97,28 @@ services:
       - CORE_PEER_ID=vp2
       - CORE_SECURITY_ENROLLID=test_vp2
       - CORE_SECURITY_ENROLLSECRET=vQelbRvja7cJ
+      - CORE_PEER_DISCOVERY_PERIOD=60s
+      - CORE_PEER_DISCOVERY_TOUCHPERIOD=61s
+      - CORE_PEER_ADDRESSAUTODETECT=true
+      - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
+      - CORE_SECURITY_ENABLED=true
+      - CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN=pbft
+      - CORE_PBFT_GENERAL_MODE=batch
+      - CORE_PBFT_GENERAL_N=4
+    command: sh -c "sleep 10; peer node start"
     links:
       - membersrvc
       - vp0
 
   vp3:
-    image: ibmblockchain/fabric-peer:x86_64-0.6.1-preview
+    image: hyperledger/fabric-peer:x86_64-0.6.1-preview
     container_name: vp3
-    extends:
-      file: ./docker-compose/peer-secure-pbft-base.yaml
-      service: peer-secure-pbft-base
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "10050:7050"
       - "10051:7051"
@@ -81,7 +128,19 @@ services:
       - CORE_PEER_ID=vp3
       - CORE_SECURITY_ENROLLID=test_vp3
       - CORE_SECURITY_ENROLLSECRET=9LKqKH5peurL
+      - CORE_PEER_DISCOVERY_PERIOD=60s
+      - CORE_PEER_DISCOVERY_TOUCHPERIOD=61s
+      - CORE_PEER_ADDRESSAUTODETECT=true
+      - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
+      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
+      - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
+      - CORE_SECURITY_ENABLED=true
+      - CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN=pbft
+      - CORE_PBFT_GENERAL_MODE=batch
+      - CORE_PBFT_GENERAL_N=4
+    command: sh -c "sleep 10; peer node start"
     links:
       - membersrvc
       - vp0
-

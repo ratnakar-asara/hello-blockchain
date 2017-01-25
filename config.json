@@ -1,7 +1,7 @@
 {  
    "chainName":"myChain",
    "KeyValStore":"keyValStore",
-   "deployWaitTime":"100",
+   "deployWaitTime":"80",
    "caserver":{  
       "ca_url":"grpc://localhost:7054"
    },
