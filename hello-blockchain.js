@@ -4,7 +4,7 @@ process.env['GOPATH'] = __dirname;
 var hfc = require('hfc');
 var util = require('util');
 var fs = require('fs');
-
+var config = require('./config');
 
 var chain;
 var keyValStorePath;
@@ -18,13 +18,6 @@ var chaincodeIDPath = __dirname + "/chaincodeID";
 init();
 
 function init() {
-    try {
-        config = JSON.parse(fs.readFileSync(__dirname + '/config.json', 'utf8'));
-    } catch (err) {
-        console.log("config.json is missing or invalid file, Rerun the program with right file")
-        process.exit();
-    }
-
     // Create a client chain.
     chain = hfc.newChain(config.chainName);
 
